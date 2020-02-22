@@ -56,7 +56,7 @@ class UnaryFunction(Function):
     """Base class for unary functions."""
 
     def __init__(self, children: List[ASTNode]):
-        super().__init__(self, children)
+        super().__init__(children)
 
     @staticmethod
     def get_arity() -> int:
@@ -66,7 +66,7 @@ class BinaryFunction(Function):
     """Base class for binary functions."""
 
     def __init__(self, children: List[ASTNode]):
-        super().__init__(self, children)
+        super().__init__(children)
 
     @staticmethod
     def get_arity() -> int:
