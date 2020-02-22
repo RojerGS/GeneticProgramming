@@ -1,31 +1,73 @@
+from typing import List
 from abc import ABC, abstractmethod
 
-class Terminal(ABC):
-    """Terminal abstract base class."""
+class ASTNode(ABC):
+    """Abstract class for the AST nodes.
 
-    @abstractmethod
-    def evaluate(self, context):
-        pass
-
-class Function(ABC):
-    """Function abstract base class."""
-
-    def __init__(self, arity):
-        self.arity = arity
+    These nodes can be terminals or functions.
+    Terminals can be seen as constants, while functions combine their children
+        to produce their value.
+    """
 
     @abstractmethod
     def evaluate(self, context, *args):
+        """Evaluate the value of this node."""
         pass
 
-class ASTNode(object):
-    """Abstract Syntax Tree class to represent the programs.
+    @abstractmethod
+    def is_leaf(self) -> bool:
+        """Returns true if this node is a leaf."""
+        pass
 
-    A node can have an arbitrary number of children, including 0.
-    """
+    @staticmethod
+    @abstractmethod
+    def get_arity() -> int:
+        """Returns the arity of a function or 0 for a terminal."""
+        pass
 
-    def __init__(self, children = None):
+class Terminal(ASTNode):
+    """Terminal abstract base class."""
+
+    def is_leaf(self) -> bool:
+        return True
+
+    @staticmethod
+    def get_arity() -> int:
+        return 0
+
+class Function(ASTNode):
+    """Function abstract base class."""
+
+    def __init__(self, children: List[ASTNode]):
+        """Builds a function node from the children given."""
         self.children = children
 
-    def is_leaf(self):
-        """Boolean method returning True if this node is a leaf."""
-        return len(self.children) == 0
+    def is_leaf(self) -> bool:
+        return False
+
+    def evaluate_children(self, context, *args) -> None:
+        """Evaluates all the children of this function."""
+
+        self.children_values = []
+        for child in self.children:
+            self.children_values.append(child.evaluate(context, *args))
+
+class UnaryFunction(Function):
+    """Base class for unary functions."""
+
+    def __init__(self, children: List[ASTNode]):
+        super().__init__(self, children)
+
+    @staticmethod
+    def get_arity() -> int:
+        return 1
+
+class BinaryFunction(Function):
+    """Base class for binary functions."""
+
+    def __init__(self, children: List[ASTNode]):
+        super().__init__(self, children)
+
+    @staticmethod
+    def get_arity() -> int:
+        return 2
