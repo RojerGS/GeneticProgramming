@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from random import choice
 
 from interfaces import ASTNode, Function, Terminal
@@ -12,7 +12,8 @@ def random_tree_full(
     """
 
     if depth == 1:
-        return choice(terminals)
+        terminal = choice(terminals)
+        return terminal()
 
     else:
         func = choice(functions)

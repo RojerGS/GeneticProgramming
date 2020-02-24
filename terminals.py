@@ -29,6 +29,11 @@ class IntConstant(Terminal):
     def evaluate(self, *args) -> int:
         return self.value
 
+def int_constant_factory(min: int = 0, max: int = 1) -> IntConstant:
+    """Creates an IntConstant class with the specified range."""
+        
+    return lambda: IntConstant(min, max)
+
 class FloatConstant(Terminal):
     """A latent constant float.
 
