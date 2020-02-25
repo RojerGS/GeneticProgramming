@@ -1,5 +1,25 @@
+import math
 from typing import List
-from interfaces import BinaryFunction, ASTNode
+
+from interfaces import UnaryFunction, BinaryFunction, ASTNode
+
+class Abs(UnaryFunction):
+    """Returns the absolute value of its child."""
+    def __init__(self, children: List[ASTNode]):
+        super().__init__(children)
+
+    def evaluate(self, context = None, *args):
+        self.evaluate_children(context, *args)
+        return abs(self.children_values[0])
+
+class Sqrt(UnaryFunction):
+    """Returns the square root of its child."""
+    def __init__(self, children: List[ASTNode]):
+        super().__init__(children)
+
+    def evaluate(self, context = None, *args):
+        self.evaluate_children(context, *args)
+        return math.sqrt(self.children_values[0])
 
 class Max(BinaryFunction):
     """Returns the maximum of its two children."""
