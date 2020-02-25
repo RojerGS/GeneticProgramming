@@ -4,9 +4,9 @@ from functions import *
 from gp_components import *
 
 terminals = [int_constant_factory(0, 10), float_constant_factory(-1, 3)]
-functions = [Addition, Subtraction, Product, ProtectedDivision]
+functions = [Abs, ProtectedSqrt]
 
-tree = random_tree_full(2, functions, terminals)
+tree = random_tree_full(4, functions, terminals)
 
 print(tree)
 print(tree.evaluate())
