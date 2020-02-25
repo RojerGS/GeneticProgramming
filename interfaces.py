@@ -13,7 +13,7 @@ class ASTNode(ABC):
         self.children = []
 
     @abstractmethod
-    def evaluate(self, context, *args):
+    def evaluate(self, context = None, *args):
         """Evaluate the value of this node."""
         pass
 
@@ -43,6 +43,11 @@ class Terminal(ASTNode):
 
     def __init__(self):
         super().__init__()
+        self.value = None
+
+    def evaluate(self, context = None, *args):
+        """For terminal nodes, evaluating defaults to returning the value."""
+        return self.value
 
     def is_leaf(self) -> bool:
         return True
@@ -50,6 +55,11 @@ class Terminal(ASTNode):
     @staticmethod
     def get_arity() -> int:
         return 0
+
+    def __str__(self) -> str:
+        """String representation of the terminal."""
+        name = self.__class__.__name__
+        return "{}({})".format(name, self.value)
 
 class Function(ASTNode):
     """Function abstract base class."""
@@ -63,7 +73,7 @@ class Function(ASTNode):
     def is_leaf(self) -> bool:
         return False
 
-    def evaluate_children(self, context, *args) -> None:
+    def evaluate_children(self, context = None, *args) -> None:
         """Evaluates all the children of this function."""
 
         self.children_values = []

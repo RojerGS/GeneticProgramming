@@ -6,7 +6,7 @@ class Max(BinaryFunction):
     def __init__(self, children: List[ASTNode]):
         super().__init__(children)
 
-    def evaluate(self, context, *args):
+    def evaluate(self, context = None, *args):
         self.evaluate_children(context, *args)
         return max(self.children_values)
 
@@ -15,6 +15,6 @@ class Min(BinaryFunction):
     def __init__(self, children: List[ASTNode]):
         super().__init__(children)
 
-    def evaluate(self, context, *args):
+    def evaluate(self, context = None, *args):
         self.evaluate_children(context, *args)
         return min(self.children_values)

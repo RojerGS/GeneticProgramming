@@ -4,10 +4,8 @@ from interfaces import Terminal
 class Zero(Terminal):
     """The 0 constant terminal."""
     def __init__(self):
-        pass
-
-    def evaluate(self, *args) -> int:
-        return 0
+        super().__init__()
+        self.value = 0
 
 class One(Terminal):
     """The 1 constant terminal."""
