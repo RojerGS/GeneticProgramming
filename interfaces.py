@@ -61,7 +61,7 @@ class Terminal(ASTNode):
         name = self.__class__.__name__
         return "{}({})".format(name, self.value)
 
-class IntTerminal(ASTNode):
+class IntTerminal(Terminal):
     """Terminal parent class that evaluates to int."""
 
     def __init__(self):
@@ -71,7 +71,7 @@ class IntTerminal(ASTNode):
         """Return the integer self value."""
         return self.value
 
-class FloatTerminal(ASTNode):
+class FloatTerminal(Terminal):
     """Terminal parent class that evaluates to float."""
 
     def __init__(self):
