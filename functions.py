@@ -12,14 +12,19 @@ class Abs(UnaryFunction):
         self.evaluate_children(context, *args)
         return abs(self.children_values[0])
 
-class Sqrt(UnaryFunction):
-    """Returns the square root of its child."""
+class ProtectedSqrt(UnaryFunction):
+    """Returns the protected square root of its child.
+    
+    The protected square root of `a` is 0 if `a < 0`."""
     def __init__(self, children: List[ASTNode]):
         super().__init__(children)
 
     def evaluate(self, context = None, *args):
         self.evaluate_children(context, *args)
-        return math.sqrt(self.children_values[0])
+        if self.children_values[0] >= 0:
+            return math.sqrt(self.children_values[0])
+        else:
+            return 0
 
 class Max(BinaryFunction):
     """Returns the maximum of its two children."""
