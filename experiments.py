@@ -4,7 +4,7 @@ from functions import *
 from gp_components import *
 
 terminals = [int_constant_factory(0, 10), Zero]
-functions = [Max, Min]
+functions = [Addition, Subtraction]
 
 tree = random_tree_full(3, functions, terminals)
 
