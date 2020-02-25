@@ -1,3 +1,4 @@
+from typing import Callable
 from random import random, randint
 from interfaces import IntTerminal, FloatTerminal
 
@@ -17,14 +18,15 @@ class IntConstant(IntTerminal):
     """A latent constant integer.
     
     When initialized, this terminal assumes a fixed value chosen
-        randomly from the range given.
+    randomly from the range given.
     """
     def __init__(self, min: int = 0, max: int = 1):
         self.value = randint(min, max)
 
-def int_constant_factory(min: int = 0, max: int = 1) -> IntConstant:
-    """Creates an IntConstant class with the specified range."""
-        
+def int_constant_factory(
+    min: int = 0, max: int = 1
+) -> Callable[[], IntConstant]:
+    """Returns a function that creates IntConstant's with the given range."""
     return lambda: IntConstant(min, max)
 
 class FloatConstant(FloatTerminal):
@@ -38,3 +40,9 @@ class FloatConstant(FloatTerminal):
 
     def evaluate(self, *args) -> float:
         return self.value
+
+def float_constant_factory(
+    min: float = 0, max: float = 1
+) -> Callable[[], FloatConstant]:
+    """Returns a function that creates FloatConstant's with the given range."""
+    return lambda: FloatConstant(min, max)
