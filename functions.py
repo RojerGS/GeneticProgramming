@@ -36,3 +36,13 @@ class Subtraction(BinaryFunction):
     def evaluate(self, context = None, *args):
         self.evaluate_children(context, *args)
         return self.children_values[0] - self.children_values[1]
+
+class Product(BinaryFunction):
+    """Returns the product of two numbers."""
+    def __init__(self, children: List[ASTNode]):
+        super().__init__(children)
+
+    def evaluate(self, context = None, *args):
+        self.evaluate_children(context, *args)
+        return self.children_values[0] * self.children_values[1]
+
