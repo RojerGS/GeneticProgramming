@@ -9,6 +9,9 @@ class ASTNode(ABC):
         to produce their value.
     """
 
+    def __init__(self, *args):
+        self.children = []
+
     @abstractmethod
     def evaluate(self, context, *args):
         """Evaluate the value of this node."""
@@ -25,8 +28,21 @@ class ASTNode(ABC):
         """Returns the arity of a function or 0 for a terminal."""
         pass
 
+    def __str__(self) -> str:
+        """Returns the string representation of the ASTNode."""
+
+        name = self.__class__.__name__
+        if self.is_leaf():
+            return name
+        else:
+            children = [str(child) for child in self.children]
+            return "{}[{}]".format(name, " ".join(children))
+
 class Terminal(ASTNode):
     """Terminal abstract base class."""
+
+    def __init__(self):
+        super().__init__()
 
     def is_leaf(self) -> bool:
         return True
@@ -40,6 +56,8 @@ class Function(ASTNode):
 
     def __init__(self, children: List[ASTNode]):
         """Builds a function node from the children given."""
+        super().__init__(children)
+
         self.children = children
 
     def is_leaf(self) -> bool:
