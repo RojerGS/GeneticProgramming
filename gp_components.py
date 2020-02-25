@@ -27,10 +27,11 @@ def random_tree_full(
 class Simulation(object):
     """Class to hold a whole genetic programming simulation."""
 
-    def __init__(self, terminals, functions):
-        self.terminals = terminals
+    def __init__(self, functions, terminals):
         self.functions = functions
+        self.terminals = terminals
 
+        self.population_size = 100
         self.max_generations = 100
         self.current_generation = 0
 
@@ -38,7 +39,7 @@ class Simulation(object):
 
     def initialize_population(self):
         """Initialize a random population for an evolutionary run."""
-        pass
+        self.population = random_tree_full(3, self.functions, self.terminals)
 
     def next_generation(self):
         """Performs one generation of the evolutionary algorithm."""
