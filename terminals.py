@@ -1,5 +1,5 @@
 from random import random, randint
-from interfaces import Terminal
+from interfaces import IntTerminal, FloatTerminal
 
 class Zero(IntTerminal):
     """The 0 constant terminal."""
