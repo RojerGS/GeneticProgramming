@@ -21,6 +21,7 @@ class IntConstant(IntTerminal):
     randomly from the range given.
     """
     def __init__(self, min: int = 0, max: int = 1):
+        super().__init__()
         self.value = randint(min, max)
 
 def int_constant_factory(

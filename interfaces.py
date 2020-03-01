@@ -22,6 +22,11 @@ class ASTNode(ABC):
         """Returns true if this node is a leaf."""
         pass
 
+    @abstractmethod
+    def copy(self) -> "ASTNode":
+        """Return a copy of this tree"""
+        pass
+
     @staticmethod
     @abstractmethod
     def get_arity() -> int:
@@ -51,6 +56,12 @@ class Terminal(ASTNode):
 
     def is_leaf(self) -> bool:
         return True
+
+    def copy(self) -> "Terminal":
+        cls = type(self)
+        obj = cls()
+        obj.value = self.value
+        return obj
 
     @staticmethod
     def get_arity() -> int:
@@ -92,6 +103,13 @@ class Function(ASTNode):
 
     def is_leaf(self) -> bool:
         return False
+
+    def copy(self) -> "Function":
+        """Create a deep copy of this Function ASTNode."""
+        children_copies = [child.copy() for child in self.children]
+        cls = type(self)
+        obj = cls(children_copies)
+        return obj
 
     def evaluate_children(self, context = None, *args) -> None:
         """Evaluates all the children of this function."""
