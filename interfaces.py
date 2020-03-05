@@ -33,6 +33,11 @@ class ASTNode(ABC):
         """Returns the arity of a function or 0 for a terminal."""
         pass
 
+    @abstractmethod
+    def __len__(self) -> int:
+        """Returns the size of the ASTNode."""
+        pass
+
     def __str__(self) -> str:
         """Returns the string representation of the ASTNode."""
 
@@ -66,6 +71,10 @@ class Terminal(ASTNode):
     @staticmethod
     def get_arity() -> int:
         return 0
+
+    def __len__(self) -> int:
+        """Return the length of this terminal node."""
+        return 1
 
     def __str__(self) -> str:
         """String representation of the terminal."""
@@ -117,6 +126,11 @@ class Function(ASTNode):
         self.children_values = []
         for child in self.children:
             self.children_values.append(child.evaluate(context, *args))
+
+    def __len__(self) -> int:
+        """Returns the length of this ASTNode, depending on the sub-lengths."""
+
+        return 1 + sum(map(len, self.children))
 
 class UnaryFunction(Function):
     """Base class for unary functions."""
