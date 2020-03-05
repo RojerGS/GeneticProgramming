@@ -10,5 +10,6 @@ tree = random_tree_full(4, functions, terminals)
 
 print(tree)
 print(tree.evaluate())
+print(len(tree))
 print(tree.copy())
 print(tree.copy() is tree)
