@@ -39,15 +39,16 @@ def tree_crossover(left: ASTNode, right: ASTNode) -> ASTNode:
 
     right_size = len(right)
     node_idx = randint(1, right_size)
-    # Do a "depth-first search" counting the nodes I go by
+    # Do a "depth-first search" counting the nodes as they are traversed
+    # This performs a search from right to left
     stack = [right]
     count = 0
     while stack:
         subtree = stack.pop()
         count += 1
         if count == node_idx:
-            print("Found node {} of tree {}: {}".format(node_idx, right, subtree))
-            break
+            # Have the `right` variable point to the subtree T
+            right = subtree
 
         if not subtree.is_leaf():
             for child in subtree.children:
@@ -57,6 +58,35 @@ def tree_crossover(left: ASTNode, right: ASTNode) -> ASTNode:
         raise ValueError(
             "Exhausted tree when looking for the {}th node.".format(node_idx)
         )
+
+    left_size = len(left)
+    node_idx = randint(1, left_size)
+    # If node_idx is 1 then we substitute the whole tree with `right`
+    if node_idx == 1:
+        return right
+
+    # Do a similar "depth-first search", but now we increment the counter
+    ## as soon as we touch a children, before adding it to the stack.
+    # This makes it easier to replace the correct subtree with `right`.
+    stack = [left]  # This stack will only contain non-leaf nodes
+    count = 1
+    while stack:
+        subtree = stack.pop()
+        for idx, child in enumerate(subtree.children):
+            # This `child` is the `count`th node, is this the node we want?
+            count += 1
+            if count == node_idx:
+                subtree.children[idx] = right
+                break
+            else:
+                if not child.is_leaf():
+                    stack.append(child)
+    else:
+        raise ValueError(
+            "Exhausted tree when looking for the {}th node.".format(node_idx)
+        )
+
+    return left
 
 class Simulation(object):
     """Class to hold a whole genetic programming simulation."""

@@ -6,10 +6,7 @@ from gp_components import *
 terminals = [int_constant_factory(0, 10), float_constant_factory(-1, 3)]
 functions = [Abs, ProtectedSqrt, Addition, Product]
 
-tree = random_tree_full(4, functions, terminals)
+left = random_tree_full(3, functions, terminals)
+right = random_tree_full(3, functions, terminals)
 
-print(tree)
-print(tree.evaluate())
-print(len(tree))
-print(tree.copy())
-print(tree.copy() is tree)
+tree_crossover(left, right)
