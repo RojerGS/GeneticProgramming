@@ -1,5 +1,5 @@
 from typing import List, Union
-from random import choice
+from random import choice, randint
 
 from interfaces import ASTNode, Function, Terminal
 
@@ -23,6 +23,40 @@ def random_tree_full(
             children.append(random_tree_full(depth - 1, functions, terminals))
 
         return func(children)
+
+def tree_crossover(left: ASTNode, right: ASTNode) -> ASTNode:
+    """Creates a tree by joining together two parts, one from each arg tree.
+
+    Randomly and uniformly picks a point from the left tree and cuts the subtree
+    rooted at the chosen point; call that point A.
+    Randomly and uniformly picks a point from the right tree and extracts the
+    subtree rooted at that point; call that tree T.
+    Inserts tree T at the point A and returns a copy of that.
+    """
+
+    left = left.copy()
+    right = right.copy()
+
+    right_size = len(right)
+    node_idx = randint(1, right_size)
+    # Do a "depth-first search" counting the nodes I go by
+    stack = [right]
+    count = 0
+    while stack:
+        subtree = stack.pop()
+        count += 1
+        if count == node_idx:
+            print("Found node {} of tree {}: {}".format(node_idx, right, subtree))
+            break
+
+        if not subtree.is_leaf():
+            for child in subtree.children:
+                stack.append(child)
+    # If the stack became empty without breaking from the while raise an error
+    else:
+        raise ValueError(
+            "Exhausted tree when looking for the {}th node.".format(node_idx)
+        )
 
 class Simulation(object):
     """Class to hold a whole genetic programming simulation."""
