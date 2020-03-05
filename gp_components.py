@@ -49,6 +49,7 @@ def tree_crossover(left: ASTNode, right: ASTNode) -> ASTNode:
         if count == node_idx:
             # Have the `right` variable point to the subtree T
             right = subtree
+            break
 
         if not subtree.is_leaf():
             for child in subtree.children:
@@ -77,10 +78,10 @@ def tree_crossover(left: ASTNode, right: ASTNode) -> ASTNode:
             count += 1
             if count == node_idx:
                 subtree.children[idx] = right
-                break
-            else:
-                if not child.is_leaf():
-                    stack.append(child)
+                return left
+
+            if not child.is_leaf():
+                stack.append(child)
     else:
         raise ValueError(
             "Exhausted tree when looking for the {}th node.".format(node_idx)
