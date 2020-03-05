@@ -9,4 +9,7 @@ functions = [Abs, ProtectedSqrt, Addition, Product]
 left = random_tree_full(3, functions, terminals)
 right = random_tree_full(3, functions, terminals)
 
-tree_crossover(left, right)
+print(left)
+print(right)
+print(tree_crossover(left, right))
+print(tree_crossover(left, right))
