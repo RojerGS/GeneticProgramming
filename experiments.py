@@ -4,7 +4,7 @@ from functions import *
 from gp_components import *
 
 terminals = [int_constant_factory(0, 10), float_constant_factory(-1, 3)]
-functions = [Abs, ProtectedSqrt]
+functions = [Abs, ProtectedSqrt, Addition, Product]
 
 tree = random_tree_full(4, functions, terminals)
 
